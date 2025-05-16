@@ -1,4 +1,4 @@
-const Product = require("../models/product");
+const Product = require("../models/allModels.js");
 
 const getProductById = async (req, res) => {
   try {
@@ -6,87 +6,80 @@ const getProductById = async (req, res) => {
     if (!product) return res.status(404).send("product not found");
     res.json(product);
   } catch (err) {
-    res.status(500).send(err.message);
+    res.status(500).json({message: err.message});
   }
 };
 
 const getProductReviews = async (req, res) => {
   try {
-    
     const product = await Product.findById(req.params.product);
     if (!product) return res.status(404).send("Product not found");
-
-    
-
-
   } catch (err) {
-    res.status(500).send(err.message);
+    res.status(500).json({message: err.message});
   }
 };
 
-exports.createProduct = async (req, res) => {
+const createProduct = async (req, res) => {
   try {
     const { name, category, price } = req.body;
     const product = new Product({ name, category, price });
     await product.save();
     res.status(201).json(product);
   } catch (err) {
-    res.status(400).send(err.message);
+    res.status(500).json({message: err.message});
   }
 };
 
-exports.addReview = async (req, res) => {
+const addReview = async (req, res) => {
   try {
     const { userName, text } = req.body;
     const product = await Product.findById(req.params.product);
-    if (!product) return res.status(404).send('Product not found');
+    if (!product) return res.status(404).send("Product not found");
 
-    const review = { userName, text, product: product._id };
+    const review = { userName, text, product: product.productId };
     product.reviews.push(review);
     await product.save();
 
-    res.status(201).json(product.reviews[product.reviews.length - 1]);
+    res.status(201).json(product.reviews);
   } catch (err) {
-    res.status(400).send(err.message);
+    res.status(500).json({message: err.message});
   }
 };
 
-exports.deleteProduct = async (req, res) => {
+const deleteProduct = async (req, res) => {
   try {
     const deleted = await Product.findByIdAndDelete(req.params.product);
-    if (!deleted) return res.status(404).send('Product not found');
-    res.json({ message: 'Product deleted' });
+    if (!deleted) return res.status(404).send("product not found");
+    res.json({ message: "product has been deleted" });
   } catch (err) {
-    res.status(500).send(err.message);
+    res.status(500).json({message: err.message});
   }
 };
 
-exports.deleteReview = async (req, res) => {
+const deleteReview = async (req, res) => {
   try {
-    const product = await Product.findOne({ 'reviews._id': req.params.review });
-    if (!product) return res.status(404).send('Review not found');
+    const product = await Product.findOne({ "reviews._id": req.params.review });
+    if (!product) return res.status(404).send("review not found");
 
     product.reviews.id(req.params.review).remove();
     await product.save();
 
-    res.json({ message: 'Review deleted' });
+    res.json({ message: "Review has been deleted" });
   } catch (err) {
-    res.status(500).send(err.message);
+    res.status(500).json({message: err.message});
   }
 };
 
-exports.getProducts = async (req, res) => {
+const getProducts = async (req, res) => {
   try {
-    let { page = 1, category, price, query } = req.query;
-    page = parseInt(page);
+    let { category, price, query } = req.query;
+    
 
     let filter = {};
     if (category) filter.category = category;
-    if (query) filter.name = { $regex: query, $options: 'i' };
+  
 
-    let sort = {};
-    if (price === 'highest') sort.price = -1;
-    else if (price === 'lowest') sort.price = 1;
+
 
     const totalCount = await Product.countDocuments(filter);
 
@@ -97,11 +90,11 @@ exports.getProducts = async (req, res) => {
 
     res.json({
       page,
-      totalPages: Math.ceil(totalCount / PRODUCTS_PAGE_SIZE),
-      totalCount,
       products,
     });
   } catch (err) {
-    res.status(500).send(err.message);
+    res.status(500).json({message: err.message});
   }
 };
+
+moduel.exports = { getProductById };
