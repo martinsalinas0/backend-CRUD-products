@@ -11,7 +11,7 @@ mongoose.connect('mongodb://localhost/products')
 
 
 //routes
-app.use('/api', productRoutes)
+// app.use('/api', productRoutes)
 
 
 const PORT = process.env.PORT || 3000; 
