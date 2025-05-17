@@ -1,4 +1,5 @@
 const mongoose = require("mongoose");
+const ReviewSchema = require('./reviewsModel.js')
 
 const ProductSchema = mongoose.Schema(
   {
@@ -24,7 +25,8 @@ const ProductSchema = mongoose.Schema(
     category: {
       type: String, 
       required: true,
-    }
+    }, 
+    reviews: [ReviewSchema], 
   },
   {
     timestamps: true,

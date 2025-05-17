@@ -22,6 +22,11 @@ app.get("/api/product/:productId", async (req, res) => {
     const { productId } = req.params;
 
     const product = await Product.findById(productId);
+
+    if (!product) {
+      return res.status(404).json({ message: "product not found" });
+    }
+
     res.status(200).json(product);
   } catch (error) {
     res.status(500).json({ message: error.message });
@@ -60,7 +65,7 @@ app.delete("/api/product/:productId", async (req, res) => {
     if (!productToDelete) {
       return res.status(404).json({ message: "Product not found" });
     }
-    res.status(200).json({ messgage: "product deleted" });
+    res.status(200).json({ message: "product deleted" });
   } catch (error) {
     res.status(500).json({ message: error.message });
   }
