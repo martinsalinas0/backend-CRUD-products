@@ -28,6 +28,8 @@ app.get("/api/product/:productId", async (req, res) => {
   }
 });
 
+//GET /products
+//Returns all products
 app.get("/api/products", async (req, res) => {
   try {
     const products = await Product.find({});
@@ -37,10 +39,28 @@ app.get("/api/products", async (req, res) => {
   }
 });
 
+//POST /products
+//adds a new product
 app.post("/api/products", async (req, res) => {
   try {
     const newProduct = await Product.create(req.body);
     res.status(200).json(newProduct);
+  } catch (error) {
+    res.status(500).json({ message: error.message });
+  }
+});
+
+//DELETE /products/:productId
+//delets a product byId
+app.delete("/api/product/:productId", async (req, res) => {
+  try {
+    const { productId } = req.params;
+
+    const productToDelete = await Product.findByIdAndDelete(productId);
+    if (!productToDelete) {
+      return res.status(404).json({ message: "Product not found" });
+    }
+    res.status(200).json({ messgage: "product deleted" });
   } catch (error) {
     res.status(500).json({ message: error.message });
   }
