@@ -41,25 +41,56 @@ const productSchema = new Schema({
 
 const ProductModel = mongoose.model('product', productSchema)
 
-const productOne = new ProductModel ({ 
-  name: 'T-shirt', 
-  price: 32, 
-  category: "clothes",
-  imageUrl: 'khngfa', 
-  stockNumber: 43
-})
+// const productOne = new ProductModel ({ 
+//   name: 'Sleek Plastic Keyboard', 
+//   price: 0.00, 
+//   category: "Jewelry",
+//   imageUrl: 'khngfa', 
+//   stockNumber: 719
+// })
+
+// const productTwo = new ProductModel ({ 
+//   name: 'Incredible Wooden Ball', 
+//   price: 0.00, 
+//   category: "Garden",
+//   imageUrl: 'khngfa', 
+//   stockNumber: 380
+// })
+// const productThree = new ProductModel ({ 
+//   name: 'Toasty Concrete Soap', 
+//   price: 0.00, 
+//   category: "Games",
+//   imageUrl: 'khngfa', 
+//   stockNumber: 340
+// })
+// const productFour = new ProductModel ({ 
+//   name: 'Small Fresh Bacon', 
+//   price: 0.00, 
+//   category: "Beauty",
+//   imageUrl: 'khngfa', 
+//   stockNumber: 731
+// })
+// const productFive = new ProductModel ({ 
+//   name: 'Practical Fresh Shirt', 
+//   price: 0.00, 
+//   category: "Home",
+//   imageUrl: 'khngfa', 
+//   stockNumber: 276
+// })
 
 
-productOne.save() 
-  .then((doc) => { 
-    console.log('new product SAves')
-  })
-  .catch((err) => { 
-    console.error('Errror saving new product', err)
-  })
-  .finally(() => { 
-    mongoose.connection.close()
-    .then(()=>{ 
-      console.log("MongoDB connectio closes")
-    })
-  })
+
+
+  // productTwo.save() 
+  // .then((doc) => { 
+  //   console.log('new product SAves')
+  // })
+  // .catch((err) => { 
+  //   console.error('Errror saving new product', err)
+  // })
+  // .finally(() => { 
+  //   mongoose.connection.close()
+  //   .then(()=>{ 
+  //     console.log("MongoDB connection  closes")
+  //   })
+  // })
