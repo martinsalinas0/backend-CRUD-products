@@ -2,13 +2,14 @@
 // const router = express.Router();
 // const controller = require('../controllers/productController');
 
-// router.get('/products/:product', controller.getProductById);
-// router.get('/products/:product/reviews', controller.getProductReviews);
-// // add others:
-// router.post('/products', controller.createProduct);
-// router.post('/products/:product/reviews', controller.addReview);
-// router.delete('/products/:product', controller.deleteProduct);
-// router.delete('/reviews/:review', controller.deleteReview);
-// router.get('/products', controller.getProducts); // with filtering/sorting/search
+//  GET /products/:product: Returns a specific product by its id
+//  POST /products: Creates a new product in the database
+//  GET /products: Returns all products
+// DELETE /products/:product: Deletes a product by id
 
-// module.exports = router;
+// GET /products/:product/reviews: Returns ALL the reviews for a product,
+// ---> EDIT: but limited to 4 at a time. This one will be a little tricky as you'll have to retrieve them out of the products. You should be able to pass in an optional page query parameter to paginate.
+
+// POST /products/:product/reviews: Creates a new review in the database by adding it to the correct product's reviews array.
+
+// DELETE /reviews/:review: Deletes a review by id
